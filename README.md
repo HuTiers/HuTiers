@@ -1,6 +1,6 @@
 # HuTiers
 
-It's like my mod [HuTiersTagger](https://modrinth.com/mod/hutierstagger) but for servers so they can put tiers in the player's suffix with their plugin 
+It's like my mod [HuTiersTagger](https://modrinth.com/mod/hutierstagger) but for servers so they can put tiers in the player's suffix with their plugin or whatever
 
 Include it in your project:
 ```xml
@@ -29,7 +29,7 @@ HuTiersPlayer player = HuTiersPlayer.of(Bukkit.getPlayer("player"));
 String tier = player.getTier(Gamemode.Sword);
 Boolean retired = player.getRetired(Gamemode.Sword);
 ```
-**getTier and getRetired will return null if it hasn't fetched the player from the api yet (first time on runtime/player)**
+**getTier and getRetired will return null if it hasn't fetched the player from the api yet (first time on runtime for each player)**
 
 Building:
 ```bash
