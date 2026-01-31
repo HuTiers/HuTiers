@@ -2,8 +2,24 @@
 
 It's like my mod [HuTiersTagger](https://modrinth.com/mod/hutierstagger) but for servers so they can put tiers in the player's suffix with their plugin 
 
-Get a tier by:
+Include it in your project:
+```xml
+<repository>
+    <id>jgj52-repo</id>
+    <url>https://maven.jgj52.hu/repository/maven-releases/</url>
+</repository>
+```
 
+```xml
+<dependency>
+    <groupId>hu.jgj52</groupId>
+    <artifactId>hutiers</artifactId>
+    <version>1.0</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+Get a tier by:
 ```java
 import hu.jgj52.huTiers.Gamemode;
 import hu.jgj52.huTiers.HuTiersPlayer;
