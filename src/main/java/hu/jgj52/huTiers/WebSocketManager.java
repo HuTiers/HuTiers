@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.WebSocket;
+import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 
 public class WebSocketManager implements WebSocket.Listener {
@@ -27,7 +28,7 @@ public class WebSocketManager implements WebSocket.Listener {
     public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
         String message = data.toString();
         if (message.startsWith("update")) {
-            Player player = Bukkit.getPlayer(message.split(" ")[1]);
+            Player player = Bukkit.getPlayer(UUID.fromString(message.split(" ")[1]));
             HuTiersPlayer.removePlayer(player);
             PlayerChangeEvent.fire(player, HuTiersPlayer.of(player));
         }
