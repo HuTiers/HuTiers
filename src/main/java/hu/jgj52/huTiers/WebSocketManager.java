@@ -29,7 +29,7 @@ public class WebSocketManager implements WebSocket.Listener {
         if (message.startsWith("update")) {
             Player player = Bukkit.getPlayer(message.split(" ")[1]);
             HuTiersPlayer.removePlayer(player);
-            PlayerChangeEvent.fire(HuTiersPlayer.of(player));
+            PlayerChangeEvent.fire(player, HuTiersPlayer.of(player));
         }
         return WebSocket.Listener.super.onText(webSocket, data, last);
     }
