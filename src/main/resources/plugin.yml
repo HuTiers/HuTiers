@@ -1,0 +1,5 @@
+name: HuTiers
+version: '1.0'
+main: hu.jgj52.huTiers.HuTiers
+api-version: '1.21'
+authors: [ JGJ52 ]
