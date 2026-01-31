@@ -7,7 +7,8 @@ public final class HuTiers extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-
+        WebSocketManager webSocketManager = new WebSocketManager();
+        webSocketManager.conncect("wss://api.hutiers.hu/");
     }
 
     @Override

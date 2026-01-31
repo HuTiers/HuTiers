@@ -9,7 +9,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 public class HuTiersPlayer {
     private static Map<Player, HuTiersPlayer> players = new HashMap<>();
@@ -24,6 +26,10 @@ public class HuTiersPlayer {
 
     private static final HttpClient client = HttpClient.newHttpClient();
 
+    static void removePlayer(Player player) {
+        players.remove(player);
+    }
+
     private JsonObject tiers;
 
     private JsonObject retired;
@@ -31,9 +37,9 @@ public class HuTiersPlayer {
     private HuTiersPlayer(Player player) {
         new Thread(() -> {
             try {
-                HttpRequest request = HttpRequest.newBuilder().uri(new URI("https://api.hutiers.hu/v3/player/" + String.valueOf(player.getUniqueId()))).GET().build();
+                HttpRequest request = HttpRequest.newBuilder().uri(new URI("https://api.hutiers.hu/v3/player/" + player.getUniqueId())).GET().build();
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                JsonArray arr = (JsonArray)new Gson().fromJson(response.body(), JsonArray.class);
+                JsonArray arr = new Gson().fromJson(response.body(), JsonArray.class);
                 if (!arr.isEmpty()) {
                     this.tiers = arr.get(0).getAsJsonObject();
                     this.retired = arr.get(1).getAsJsonObject();
@@ -44,12 +50,14 @@ public class HuTiersPlayer {
         }).start();
     }
 
+    @Nullable
     public String getTier(Gamemode gamemode) {
         if (this.tiers != null)
             return this.tiers.get(gamemode.name()).getAsString();
         return null;
     }
 
+    @Nullable
     public Boolean getRetired(Gamemode gamemode) {
         if (this.retired != null)
             return this.retired.get(gamemode.name()).getAsBoolean();
