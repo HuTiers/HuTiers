@@ -2,6 +2,8 @@
 
 It's like my mod [HuTiersTagger](https://modrinth.com/mod/hutierstagger) but for servers so they can put tiers in the player's suffix with their plugin or whatever
 
+This is **not** a standalone plugin, you will need to build another plugin around it for it to do anything.
+
 Include it in your project:
 ```xml
 <repository>
