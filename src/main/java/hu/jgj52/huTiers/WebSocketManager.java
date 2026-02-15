@@ -1,7 +1,7 @@
 package hu.jgj52.huTiers;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -28,9 +28,10 @@ public class WebSocketManager implements WebSocket.Listener {
     public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
         String message = data.toString();
         if (message.startsWith("update")) {
-            Player player = Bukkit.getPlayer(UUID.fromString(message.split(" ")[1]));
+            OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(message.split(" ")[1]));
             HuTiersPlayer.removePlayer(player);
             PlayerChangeEvent.fire(player, HuTiersPlayer.of(player));
+
         }
         return WebSocket.Listener.super.onText(webSocket, data, last);
     }

@@ -9,32 +9,43 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 public class HuTiersPlayer {
-    private static Map<Player, HuTiersPlayer> players = new HashMap<>();
+    private static final Map<UUID, HuTiersPlayer> players = new HashMap<>();
+
+    public static HuTiersPlayer of(OfflinePlayer player) {
+        if (players.containsKey(player.getUniqueId()))
+            return players.get(player.getUniqueId());
+        HuTiersPlayer pl = new HuTiersPlayer(player);
+        players.put(player.getUniqueId(), pl);
+        return pl;
+    }
 
     public static HuTiersPlayer of(Player player) {
-        if (players.get(player) != null)
-            return players.get(player);
-        HuTiersPlayer pl = new HuTiersPlayer(player);
-        players.put(player, pl);
-        return pl;
+        return of(Bukkit.getOfflinePlayer(player.getUniqueId()));
+    }
+
+    public static HuTiersPlayer of(UUID uuid) {
+        return of(Bukkit.getOfflinePlayer(uuid));
     }
 
     private static final HttpClient client = HttpClient.newHttpClient();
 
-    static void removePlayer(Player player) {
-        players.remove(player);
+    static void removePlayer(OfflinePlayer player) {
+        players.remove(player.getUniqueId());
     }
 
     private JsonObject tiers;
 
     private JsonObject retired;
 
-    private HuTiersPlayer(Player player) {
+    private HuTiersPlayer(OfflinePlayer player) {
         new Thread(() -> {
             try {
                 HttpRequest request = HttpRequest.newBuilder().uri(new URI("https://api.hutiers.hu/v3/player/" + player.getUniqueId())).GET().build();

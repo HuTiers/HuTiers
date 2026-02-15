@@ -16,7 +16,7 @@ Include it in your project:
 <dependency>
     <groupId>hu.jgj52</groupId>
     <artifactId>hutiers</artifactId>
-    <version>1.0</version>
+    <version>1.3</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -32,6 +32,30 @@ String tier = player.getTier(Gamemode.Sword);
 Boolean retired = player.getRetired(Gamemode.Sword);
 ```
 **getTier and getRetired will return null if it hasn't fetched the player from the api yet (first time on runtime for each player)**
+
+Event if a player gets their tier changed:
+
+```java
+import hu.jgj52.huTiers.PlayerChangeEvent;
+
+class yourplugin {
+    public void onEnable() {
+        PlayerChangeEvent.register(player -> {
+            // player is an OfflinePlayer
+            System.out.println(player.getUniqueId() + " has been updated!");
+        });
+    }
+}
+```
+
+You can also get from the overall list:
+
+```java
+import hu.jgj52.huTiers.HuTiers;
+import hu.jgj52.huTiers.HuTiersPlayer;
+
+Set<HuTiersPlayer> first30player = HuTiers.getPlayers(0, 30);
+```
 
 Building:
 ```bash
